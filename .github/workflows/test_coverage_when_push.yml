@@ -1,0 +1,26 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download base branch's coverage file
+        uses: actions/download-artifact@v3
+        with:
+          name: "{{ env.GITHUB_SHA }}_Coverage"
+          path: $GITHUB_HEAD_REF
+
+      - name: Upload base branch's coverage file to develop branch's folder
+        uses: actions/upload-artifact@v3
+        with:
+          path: $GITHUB_HEAD_REF
+          
+          
