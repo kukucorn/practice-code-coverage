@@ -44,5 +44,5 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: "coverage_${{ env.GITHUB_RUN_ID }}"
+          name: coverage_${{ env.GITHUB_RUN_ID }}
           path: ./coverage/coverage-final.json
