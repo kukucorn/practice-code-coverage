@@ -27,7 +27,7 @@ jobs:
         id: download
         uses: actions/download-artifact@v3
         with:
-          name: "${{ env.GITHUB_REF }}"
+          name: ${{ env.GITHUB_REF }}
           path: ./coverage/base
       
       - name: "Check file existence"
@@ -41,13 +41,8 @@ jobs:
         with:
           coverage-file: ./coverage/report.json
           base-coverage-file: ./coverage/base/report.json
-      - if: ${{ steps.check_file.outputs.files_exists == 'false' }}
-        uses: ArtiomTr/jest-coverage-report-action@v2
-        with:
-          coverage-file: ./coverage/coverage-final.json
-          base-coverage-file: ./coverage/coverage-final.json
 
       - uses: actions/upload-artifact@v3
         with:
-          name: "commits_${{ env.GITHUB_SHA }}"
+          name: coverage_${{ github.run_id }}
           path: ./coverage/coverage-final.json
