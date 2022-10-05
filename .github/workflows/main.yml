@@ -30,18 +30,24 @@ jobs:
           name: "${{ env.GITHUB_REF }}"
           path: ./coverage/base
       
-      - if: ${{ steps.download.conclusion == 'success' }}
+      - name: "Check file existence"
+        id: check_file
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "./coverage/base/coverage-final.json"
+      
+      - if: ${{ steps.check_file.outputs.files_exists == 'true' }}
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           coverage-file: ./coverage/report.json
           base-coverage-file: ./coverage/base/report.json
-      - if: ${{ steps.download.conclusion == 'failure' }}
+      - if: ${{ steps.check_file.outputs.files_exists == 'false' }}
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-          coverage-file: ./coverage/report.json
-          base-coverage-file: ./coverage/report.json
+          coverage-file: ./coverage/coverage-final.json
+          base-coverage-file: ./coverage/coverage-final.json
 
       - uses: actions/upload-artifact@v3
         with:
           name: "commits_${{ env.GITHUB_SHA }}"
-          path: ./coverage/report.json
+          path: ./coverage/coverage-final.json
