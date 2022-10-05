@@ -15,7 +15,7 @@ jobs:
       - name: Download base branch's coverage file
         uses: actions/download-artifact@v3
         with:
-          name: ${{GITHUB_SHA}}_Coverage"
+          name: ${{ env.GITHUB_SHA}}_Coverage"
           path: $GITHUB_HEAD_REF
 
       - name: Upload base branch's coverage file to develop branch's folder
