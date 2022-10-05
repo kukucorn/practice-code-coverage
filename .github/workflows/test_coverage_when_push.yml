@@ -15,12 +15,12 @@ jobs:
       - name: Download base branch's coverage file
         uses: actions/download-artifact@v3
         with:
-          name: "coverage_${{ env.GITHUB_RUN_ID }}"
+          name: coverage_${{ github.run_id }}
 
       - name: Upload base branch's coverage file to develop branch's folder
         uses: actions/upload-artifact@v3
         with:
-          name: "${{ env.GITHUB_REF }}"
+          name: ${{ env.GITHUB_REF }}
           path: ./coverage-final.json
           
           
