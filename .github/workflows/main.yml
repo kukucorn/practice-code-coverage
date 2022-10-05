@@ -1,0 +1,40 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI when PR
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.2
+
+      - name: Install Package
+        run: npm install
+      
+      - name: Generate Coverage File
+        run: npm run test:cov
+        
+      - name: Download develop branch's coverage file
+        uses: actions/download-artifact@v3
+        with:
+          name: "${{ env.GITHUB_REF }}"
+          path: ./coverage/base
+      
+      - uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          coverage-file: ./coverage/report.json
+          base-coverage-file: ./coverage/base/report.json
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: "commits_${{ env.GITHUB_SHA }}"
+          path: ./coverage/report.json
