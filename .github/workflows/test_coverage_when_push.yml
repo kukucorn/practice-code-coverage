@@ -12,10 +12,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Download base branch's coverage file
-        uses: actions/download-artifact@v3
+      - uses: dawidd6/action-download-artifact@v2
         with:
-          name: coverage_${{ github.base_ref }}
+          pr: ${{github.event.pull_request.number}}
 
       - name: Upload base branch's coverage file to develop branch's folder
         uses: actions/upload-artifact@v3
