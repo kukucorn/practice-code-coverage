@@ -14,4 +14,9 @@ export class AppController {
   getFoo(): string {
     return 'foo';
   }
+
+  @Get('/bar')
+  getBar(): string {
+    return 'bar';
+  }
 }
