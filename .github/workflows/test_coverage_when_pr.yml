@@ -23,7 +23,7 @@ jobs:
       - name: Generate Coverage File
         run: npm run test:cov
         
-      - name: Download develop branch's coverage file
+      - name: Download base branch's coverage file
         id: download
         uses: dawidd6/action-download-artifact@v2
         with:
@@ -31,19 +31,21 @@ jobs:
           branch: ${{ github.base_ref }}
           if_no_artifact_found: warn
       
-      - name: "Check file existence"
+      - name: Check base branch's coverage file existence
         id: check_file
         uses: andstor/file-existence-action@v1
         with:
           files: "./${{ github.base_ref }}_coverage/coverage-final.json"
       
-      - if: ${{ steps.check_file.outputs.files_exists == 'true' }}
+      - name: comparison with base and head branch's coverage
+        if: ${{ steps.check_file.outputs.files_exists == 'true' }}
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           coverage-file: ./coverage/coverage-final.json
           base-coverage-file: ./${{ github.base_ref }}_coverage/coverage-final.json
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload head branch's coverage file
+        uses: actions/upload-artifact@v3
         with:
-          name: coverage
+          name: ${{ github.base_ref }}_coverage
           path: ./coverage/coverage-final.json
