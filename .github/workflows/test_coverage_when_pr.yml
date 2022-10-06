@@ -29,6 +29,7 @@ jobs:
         with:
           workflow: test_coverage_when_push.yml
           branch: ${{ github.base_ref }}
+          if_no_artifact_found: warn
       
       - name: "Check file existence"
         id: check_file
