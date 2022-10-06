@@ -22,5 +22,9 @@ describe('AppController', () => {
     it('should return "foo"', () => {
       expect(appController.getFoo()).toBe('foo');
     });
+
+    it('should return "bar"', () => {
+      expect(appController.getbar()).toBe('bar');
+    });
   });
 });
