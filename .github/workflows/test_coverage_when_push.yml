@@ -20,7 +20,7 @@ jobs:
       - name: Upload base branch's coverage file to develop branch's folder
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ github.head_ref }}_coverage
-          path: ./${{ github.head_ref }}_coverage/coverage-final.json
+          name: ${{ github.base_ref }}_coverage
+          path: ./${{ github.base_ref }}_coverage/coverage-final.json
           
           
