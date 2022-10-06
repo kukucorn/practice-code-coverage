@@ -19,9 +19,4 @@ export class AppController {
   getbar(): string {
     return 'bar';
   }
-
-  @Get('/baz')
-  getbaz(): string {
-    return 'baz';
-  }
 }
