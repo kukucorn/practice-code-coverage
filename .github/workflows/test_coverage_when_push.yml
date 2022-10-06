@@ -21,6 +21,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: base_coverage
-          path: ./base_coverage/coverage-final.json
+          path: ./base_coverage/report.json
           
           
