@@ -28,21 +28,21 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: test_coverage_when_push.yml
-          branch: ${{ github.head_ref }}
+          branch: ${{ github.base_ref }}
           if_no_artifact_found: warn
       
       - name: Check base branch's coverage file existence
         id: check_file
         uses: andstor/file-existence-action@v1
         with:
-          files: "./${{ github.head_ref }}_coverage/report.json"
+          files: "./${{ github.base_ref }}_coverage/report.json"
       
       - name: comparison with base and head branch's coverage
         if: ${{ steps.check_file.outputs.files_exists == 'true' }}
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           coverage-file: ./coverage/report.json
-          base-coverage-file: ./${{ github.head_ref }}_coverage/report.json
+          base-coverage-file: ./${{ github.base_ref }}_coverage/report.json
           
       - name: test base branch and compare with head branch's coverage
         if: ${{ steps.check_file.outputs.files_exists == 'false' }}
@@ -53,5 +53,5 @@ jobs:
       - name: Upload head branch's coverage file
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ github.head_ref }}_coverage
+          name: ${{ github.base_ref }}_coverage
           path: ./coverage/report.json
