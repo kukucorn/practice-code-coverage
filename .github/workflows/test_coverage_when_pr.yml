@@ -43,6 +43,12 @@ jobs:
         with:
           coverage-file: ./coverage/report.json
           base-coverage-file: ./base_coverage/report.json
+          
+      - name: test base branch and compare with head branch's coverage
+        if: ${{ steps.check_file.outputs.files_exists == 'false' }}
+        uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          coverage-file: ./coverage/report.json
 
       - name: Upload head branch's coverage file
         uses: actions/upload-artifact@v3
