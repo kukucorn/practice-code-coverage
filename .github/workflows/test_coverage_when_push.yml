@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: dawidd6/action-download-artifact@v2
         with:
-          pr: ${{github.event.pull_request.number}}
+          workflow: test_coverage_when_pr.yml
 
       - name: Upload base branch's coverage file to develop branch's folder
         uses: actions/upload-artifact@v3
